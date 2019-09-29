@@ -28,6 +28,7 @@ group :development do
   gem 'json', '= 2.1.0',                                         require: false if Gem::Requirement.create(['>= 2.5.0', '< 2.7.0']).satisfied_by?(Gem::Version.new(RUBY_VERSION.dup))
   gem 'json_pure', '<= 2.0.1',                                   require: false if Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new('2.0.0')
   gem 'rb-readline', '= 0.5.5',                                  require: false, platforms: %i[mswin mingw x64_mingw]
+  gem 'puppet-examples-helpers',                                 require: false, platforms: %i[mswin mingw x64_mingw]
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
