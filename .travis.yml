@@ -1,0 +1,50 @@
+---
+dist: xenial
+language: ruby
+cache: bundler
+before_install:
+  - bundle -v
+  - gem update --system $RUBYGEMS_VERSION
+  - gem --version
+  - bundle -v
+script:
+  - 'bundle exec $CHECK'
+rvm:
+  - '2.5'
+stages:
+  - static
+  - spec
+  - acceptance
+  -
+    if: tag =~ ^v\d
+    name: deploy
+matrix:
+  fast_finish: true
+  include:
+    -
+      env: CHECK="rake static"
+      stage: static
+    -
+      env: PUPPET_GEM_VERSION="~> 5.0" CHECK="rake parallel_spec"
+      rvm: '2.4'
+      stage: spec
+    -
+      env: PUPPET_GEM_VERSION="~> 6.0" CHECK="rake parallel_spec"
+      rvm: '2.5'
+      stage: spec
+    -
+      env: PUPPET_GEM_VERSION="~> 6.0" CHECK="ruby .ci/acceptance.rb"
+      rvm: '2.5'
+      stage: acceptance
+      services:
+        - docker
+    -
+      env: DEPLOY_TO_FORGE=yes
+      stage: deploy
+branches:
+  only:
+    - master
+    - develop
+    - /^v\d/
+notifications:
+  email: onchange

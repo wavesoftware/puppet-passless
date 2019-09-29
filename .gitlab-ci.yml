@@ -1,0 +1,49 @@
+---
+stages:
+  - syntax
+  - unit
+  - acceptance
+
+cache:
+  paths:
+    - vendor/bundle
+
+before_script:
+  - bundle -v
+  - gem update --system $RUBYGEMS_VERSION
+  - gem --version
+  - bundle -v
+  - bundle install --path vendor/bundle --jobs $(nproc)
+
+Syntax checks:
+  stage: syntax
+  image: ruby:2.5
+  script:
+    - bundle static
+  variables:
+    PUPPET_GEM_VERSION: '~> 6'
+
+Parallel Unit Specs [Ruby 2.5, Puppet ~> 6]:
+  stage: unit
+  image: ruby:2.5
+  script:
+    - bundle exec rake parallel_spec
+  variables:
+    PUPPET_GEM_VERSION: '~> 6'
+
+Parallel Unit Specs [Ruby 2.4, Puppet ~> 5]:
+  stage: unit
+  image: ruby:2.4
+  script:
+    - bundle exec rake parallel_spec
+  variables:
+    PUPPET_GEM_VERSION: '~> 5'
+
+Litmus Acceptance Tests:
+  stage: acceptance
+  image: ruby:2.5
+  script:
+    - bundle exec ruby .ci/acceptance.rb
+  variables:
+    PUPPET_GEM_VERSION: '~> 6'
+

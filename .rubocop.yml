@@ -1,0 +1,39 @@
+---
+inherit_from: .rubocop_todo.yml
+require:
+- rubocop-rspec
+- rubocop-i18n
+AllCops:
+  DisplayCopNames: true
+  TargetRubyVersion: '2.1'
+  Include:
+  - "./**/*.rb"
+  Exclude:
+  - bin/*
+  - ".vendor/**/*"
+  - spec/fixtures/**/*
+  - vendor/**/*
+Bundler/DuplicatedGem:
+  Enabled: false
+GetText/DecorateString:
+  Enabled: false
+GetText/DecorateFunctionMessage:
+  Enabled: false
+Layout/IndentHeredoc:
+  Enabled: false
+Metrics/LineLength:
+  Exclude:
+   - spec/spec_helper.rb
+   - spec/spec_helper_acceptance.rb
+   - Rakefile
+   - Gemfile
+Security/Eval:
+  Exclude:
+    - 'Gemfile'
+Security/JSONLoad:
+  Exclude:
+    - 'Rakefile'
+Style/FileName:
+  Exclude:
+    - 'Gemfile'
+    - 'Rakefile'
