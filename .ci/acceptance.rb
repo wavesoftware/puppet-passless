@@ -1,18 +1,24 @@
 #!/usr/bin/env ruby
 
-require 'rake'
 require 'logger'
 
-logger = Logger.new(STDOUT)
+@logger = Logger.new(STDOUT)
+
+def rake(task)
+  @logger.info "Executing: rake #{task}..."
+  system "rake #{task}"
+  raise "rake #{task} exited with exit status of #{$?.exitstatus}" unless $?.success?
+end
+
+key = ENV['LITMUS_KEY'] || 'default'
+collection = ENV['LITMUS_COLLECTION'] || 'puppet6'
 
 begin
-  logger.info 'Running Litmus provision & install with gitlab group and puppet6...'
-  system 'rake litmus:provision_install[gitlab,puppet6]'
-  logger.info 'Checking installed modules...'
-  system "bolt command run 'puppet --version && puppet module list --tree' -i inventory.yaml -n '*'"
-  logger.info 'Running acceptance tests in parallel...'
-  system 'rake litmus:acceptance:parallel'
+  rake "litmus:provision_list[#{key}]"
+  rake "litmus:install_agent[#{collection}]"
+  rake 'litmus:install_module'
+  
+  rake 'litmus:acceptance:parallel'
 ensure
-  logger.info 'Tear down...'
-  system 'rake litmus:tear_down'
+  rake 'litmus:tear_down'
 end

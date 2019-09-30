@@ -21,6 +21,12 @@ GetText/DecorateFunctionMessage:
   Enabled: false
 Layout/IndentHeredoc:
   Enabled: false
+RSpec/DescribeSymbol:
+  Enabled: false
+RSpec/DescribeClass:
+  Enabled: false
+Layout/EndOfLine:
+  EnforcedStyle: lf
 Metrics/LineLength:
   Exclude:
    - spec/spec_helper.rb
@@ -30,6 +36,7 @@ Metrics/LineLength:
 Security/Eval:
   Exclude:
     - 'Gemfile'
+    - 'Rakefile'
 Security/JSONLoad:
   Exclude:
     - 'Rakefile'

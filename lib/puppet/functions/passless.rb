@@ -5,7 +5,5 @@ Puppet::Functions.create_function(:passless) do
     required_param 'String', :passname
   end
 
-  def passless(passname)
-    WaveSoftware::PassLess.passless(passname)
-  end
+  include WaveSoftware::PassLess
 end

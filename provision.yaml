@@ -1,13 +1,10 @@
 ---
 default:
-  provisioner: docker 
-  images: ['waffleimage/centos7']
+  provisioner: docker
+  images: ['waffleimage/centos7', 'waffleimage/ubuntu18.04']
 waffle_deb:
   provisioner: docker 
   images: ['waffleimage/ubuntu18.04']
 waffle_el:
   provisioner: docker 
   images: ['waffleimage/centos7']
-gitlab:
-  provisioner: docker
-  images: ['waffleimage/centos7', 'waffleimage/ubuntu18.04']

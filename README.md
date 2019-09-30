@@ -1,81 +1,38 @@
-puppet-passless
-===============
+Passless for Puppet
+===================
 
-It's a Puppet master password implementation that uses Puppet server's CA key to automate password creation.
+It's a Puppet master password implementation that uses Puppet server's CA to automate 
+password creation.
 
 #### Table of Contents
 
 1. [Description](#description)
-2. [Setup - The basics of getting started with passless](#setup)
-    * [What passless affects](#what-passless-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with passless](#beginning-with-passless)
 3. [Usage - Configuration options and additional functionality](#usage)
-4. [Limitations - OS compatibility, etc.](#limitations)
 5. [Development - Guide for contributing to the module](#development)
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
+This module contains a a function `passless` that will generate a password based on a 
+name given. Each password will be generated using a master password algorithm. This 
+algorithm will take a Puppet CA as a master password. Password generated will be unique
+to Puppet environemnt.
 
-This should be a fairly short description helps the user decide if your module is what they want.
+```puppet
+class { 'postgresql::server':
+  postgres_password => passless('postgresql::server)',
+}
+```
 
-## Setup
+Each password generation can be influenced by providing a options. Those options are:
 
-### What passless affects **OPTIONAL**
-
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
-
-If there's more that they should know about, though, this is the place to mention:
-
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
-
-### Beginning with passless
-
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+ * `num` - A sequential password number. Changing the password should be done by 
+   advancing this number. Thare is also a global sequence number that can be changed.
+ * `space` - A definition of space that the password will be generated from. It may
+   be a list of chars.
 
 ## Usage
 
 Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
-
-## Reference
-
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
-
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
-
-For each element (class, defined type, function, and so on), list:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
-
-For example:
-
-```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
-```
-
-## Limitations
-
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
 
 ## Development
 

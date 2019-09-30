@@ -19,7 +19,7 @@ Syntax checks:
   stage: syntax
   image: ruby:2.5
   script:
-    - bundle static
+    - bundle exec rake checks
   variables:
     PUPPET_GEM_VERSION: '~> 6'
 
@@ -39,11 +39,18 @@ Parallel Unit Specs [Ruby 2.4, Puppet ~> 5]:
   variables:
     PUPPET_GEM_VERSION: '~> 5'
 
-Litmus Acceptance Tests:
+Litmus Acceptance Tests [Puppet 6]:
   stage: acceptance
   image: ruby:2.5
   script:
     - bundle exec ruby .ci/acceptance.rb
   variables:
-    PUPPET_GEM_VERSION: '~> 6'
+    LITMUS_COLLECTION: 'puppet6'
 
+Litmus Acceptance Tests [Puppet 5]:
+  stage: acceptance
+  image: ruby:2.5
+  script:
+    - bundle exec ruby .ci/acceptance.rb
+  variables:
+    LITMUS_COLLECTION: 'puppet5'
