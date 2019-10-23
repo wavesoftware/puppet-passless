@@ -6,11 +6,11 @@ describe :passless do
 
   before do
     run_shell('mkdir -p /etc/puppetlabs/puppet/ssl/ca')
-    
+
     bolt_upload_file(cafixtures.join('ca_key.pem').to_s,
-      '/etc/puppetlabs/puppet/ssl/ca/ca_key.pem')
+                     '/etc/puppetlabs/puppet/ssl/ca/ca_key.pem')
     bolt_upload_file(cafixtures.join('ca_crt.pem').to_s,
-      '/etc/puppetlabs/puppet/ssl/ca/ca_crt.pem')
+                     '/etc/puppetlabs/puppet/ssl/ca/ca_crt.pem')
   end
 
   it 'creates a file that contains a password' do

@@ -69,7 +69,7 @@ module WaveSoftware
         scope['facts']['environment'],
         'production'
       ]
-      candidates.reject { |e| e.nil? }.first
+      candidates.reject(&:nil?).first
     end
 
     def ca_entry(type, name)
