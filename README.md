@@ -29,7 +29,7 @@ A `passless` function takes a minimum of one argument. That argument is name of 
 
 Each password generation can be influenced by providing a options. Options are given on hashmap called `options`. Those options are:
 
- * `num` - A sequential password number. Changing the password should be done by 
+ * `counter` - A sequential password number. Changing the password should be done by 
    advancing this number. Default value is `1`.
  * `scope` - A definition of scope that the password will be generated from. It may
    be one of (defaults to `alnum`): 
@@ -44,9 +44,9 @@ Each password generation can be influenced by providing a options. Options are g
 
 ```puppet
 $options = {
-  'num'    => 5,
-  'scope'  => 'human',
-  'length' => 24,
+  'counter' => 5,
+  'scope'   => 'human',
+  'length'  => 24,
 }
 user { 'root':
   password => passless("root@${::fqdn}", $options),
