@@ -33,6 +33,13 @@ Metrics/LineLength:
    - spec/spec_helper_acceptance.rb
    - Rakefile
    - Gemfile
+Metrics/BlockLength:
+  Exclude:
+   - spec/**/*_spec.rb
+RSpec/ExampleLength:
+  Max: 8
+Style/ClassAndModuleChildren:
+  Enabled: false
 Security/Eval:
   Exclude:
     - 'Gemfile'
