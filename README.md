@@ -55,16 +55,18 @@ user { 'root':
 
 ### Hiera
 
+**Hiera integration isn't done yet (#1)**
+
 All options described above can also be set via Hiera. To do this define a key that is 
-created by adding a password name and suffix of `::num`, `::scope`, or `::length`. Ex.:
+created by adding a password name and suffix of `::counter`, `::scope`, or `::length`. Ex.:
 
 ```yaml
-root@puppet.example.org::num: 13
+root@puppet.example.org::counter: 13
 root@puppet.example.org::scope: alnum
 root@puppet.example.org::length: 32
 ```
 
-You can specify a `num` both in Puppet code and in Hiera. Specifying `scope` or `length`,
+You can specify a `counter` both in Puppet code and in Hiera. Specifying `scope` or `length`,
 in both places isn't supported and will result in compilation error.
 
 ## Development
