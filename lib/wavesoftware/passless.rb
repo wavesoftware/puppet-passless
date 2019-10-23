@@ -25,32 +25,51 @@ module WaveSoftware
         length: 16
       }
       compiled = default_options.merge(options)
-      compiled = compiled.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+      compiled = compiled.each_with_object({}) do |(k, v), memo|
+        memo[k.to_sym] = v
+      end
       scope_factory = WaveSoftware::PassLess::ScopeFactory.new
       scope = scope_factory.create(compiled[:scope])
-      generator = WaveSoftware::PassLess.generator(method(:ca_crt), method(:ca_key))
+      generator = WaveSoftware::PassLess.generator(
+        method(:identity), method(:secret)
+      )
       generator.generate(name, scope, compiled[:counter], compiled[:length])
+    end
+
+    class << self
+      def generator(identity_lambda, secret_lambda)
+        if @generator.nil?
+          @generator = WaveSoftware::PassLess::Generator.new(
+            identity_lambda.call, secret_lambda.call
+          )
+        end
+        @generator
+      end
+
+      def reset
+        @generator = nil
+      end
     end
 
     private
 
-    def self.generator(identityLambda, secretLambda)
-      @generator = WaveSoftware::PassLess::Generator.new(identityLambda.call, secretLambda.call) if @generator.nil?
-      @generator
+    def identity
+      scope = closure_scope
+      environment = scope['facts']['environment']
+      crt = ca_entry('crt', 'certificate')
+      crt + environment
     end
 
-    def ca_crt
-      crt = ssldir.join('ca', 'ca_crt.pem')
-      raise Puppet::Error,
-        "Can't access Puppet CA certificate: #{crt}. Passless should be executed on Puppet Server." unless crt.readable?
-      Digest::SHA256.hexdigest(crt.read)
+    def secret
+      ca_entry('key', 'key')
     end
 
-    def ca_key
-      key = ssldir.join('ca', 'ca_key.pem')
-      raise Puppet::Error,
-        "Can't access Puppet CA key: #{key}. Passless should be executed on Puppet Server." unless key.readable?
-      Digest::SHA256.hexdigest(key.read)
+    def ca_entry(type, name)
+      entry = ssldir.join('ca', "ca_#{type}.pem")
+      error = "Can't access Puppet CA #{name}: #{entry}. "\
+              'Passless should be executed on Puppet Server.'
+      raise Puppet::ParseError, error unless entry.readable?
+      Digest::SHA256.hexdigest(entry.read)
     end
 
     def ssldir

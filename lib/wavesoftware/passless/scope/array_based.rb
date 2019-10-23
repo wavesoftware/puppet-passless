@@ -3,7 +3,7 @@ module WaveSoftware::PassLess::Scope
     def initialize(array)
       @array = array
     end
-    
+
     def provide(number)
       @array[number % @array.length]
     end
