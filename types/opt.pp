@@ -1,1 +1,1 @@
-type Passless::Opt = Enum[num, scope, length]
+type Passless::Opt = Enum[counter, scope, length]

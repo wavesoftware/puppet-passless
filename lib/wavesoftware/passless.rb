@@ -6,6 +6,7 @@ module WaveSoftware
   module PassLess
     require_relative 'passless/generator'
     require_relative 'passless/scope_factory'
+    require_relative 'passless/ssldir_resolver'
 
     # Passless function that is used to generate passwords
     #
@@ -33,17 +34,12 @@ module WaveSoftware
 
     private
 
-    class < self
-      @@generator = nil
-
-      def generator(identityLambda, secretLambda)
-        @@generator = WaveSoftware::PassLess::Generator.new(identityLambda.call, secretLambda.call) if @@generator.nil?
-        @@generator
-      end
+    def self.generator(identityLambda, secretLambda)
+      @generator = WaveSoftware::PassLess::Generator.new(identityLambda.call, secretLambda.call) if @generator.nil?
+      @generator
     end
 
     def ca_crt
-      ssldir = Pathname.new(Puppet.settings[:ssldir])
       crt = ssldir.join('ca', 'ca_crt.pem')
       raise Puppet::Error,
         "Can't access Puppet CA certificate: #{crt}. Passless should be executed on Puppet Server." unless crt.readable?
@@ -51,11 +47,14 @@ module WaveSoftware
     end
 
     def ca_key
-      ssldir = Pathname.new(Puppet.settings[:ssldir])
       key = ssldir.join('ca', 'ca_key.pem')
       raise Puppet::Error,
         "Can't access Puppet CA key: #{key}. Passless should be executed on Puppet Server." unless key.readable?
       Digest::SHA256.hexdigest(key.read)
+    end
+
+    def ssldir
+      WaveSoftware::PassLess::SslDirResolver.resolve
     end
   end
 end

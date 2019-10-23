@@ -13,7 +13,7 @@ module WaveSoftware::PassLess
       ScopeType::ALPHABET     => WaveSoftware::PassLess::Scope::Alphabet.new,
       ScopeType::ALPHANUMERIC => WaveSoftware::PassLess::Scope::Alphanumeric.new,
       ScopeType::NUMERIC      => WaveSoftware::PassLess::Scope::Numeric.new,
-      ScopeType::HUMAN        => WaveSoftware::PassLess::Scope::Numan.new,
+      ScopeType::HUMAN        => WaveSoftware::PassLess::Scope::Human.new,
       ScopeType::KEYS         => WaveSoftware::PassLess::Scope::Keys.new,
       ScopeType::UTF8         => WaveSoftware::PassLess::Scope::Utf8.new(2),
     }
