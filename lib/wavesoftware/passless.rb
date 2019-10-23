@@ -54,14 +54,22 @@ module WaveSoftware
     private
 
     def identity
-      scope = closure_scope
-      environment = scope['facts']['environment']
       crt = ca_entry('crt', 'certificate')
-      crt + environment
+      "#{crt}#{environment}"
     end
 
     def secret
       ca_entry('key', 'key')
+    end
+
+    def environment
+      scope = closure_scope
+      candidates = [
+        scope['server_facts']['environment'],
+        scope['facts']['environment'],
+        'production'
+      ]
+      candidates.reject { |e| e.nil? }.first
     end
 
     def ca_entry(type, name)
