@@ -15,7 +15,7 @@ module WaveSoftware::PassLess
       ScopeType::NUMERIC      => WaveSoftware::PassLess::Scope::Numeric.new,
       ScopeType::HUMAN        => WaveSoftware::PassLess::Scope::Human.new,
       ScopeType::KEYS         => WaveSoftware::PassLess::Scope::Keys.new,
-      ScopeType::UTF8         => WaveSoftware::PassLess::Scope::Utf8.new(2)
+      ScopeType::UTF8         => WaveSoftware::PassLess::Scope::Utf8.new(3)
     }.freeze
     LIST_PREFIX = 'list:'.freeze
 
