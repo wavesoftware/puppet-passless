@@ -3,6 +3,7 @@ Passless for Puppet
 
 [![Travis Build Status](https://travis-ci.com/wavesoftware/puppet-passless.svg?branch=master)](https://travis-ci.com/wavesoftware/puppet-passless)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/spq8dce2slfybs0a/branch/master?svg=true)](https://ci.appveyor.com/project/cardil/puppet-passless/branch/master)
+![Puppet Forge version](https://img.shields.io/puppetforge/v/wavesoftware/passless)
 
 
 It's a Puppet master password implementation that uses PuppetServer's CA to 
