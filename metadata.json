@@ -5,6 +5,8 @@
   "summary": "A Puppet master password implementation that uses Puppet server's CA key to automate password creation.",
   "license": "Apache-2.0",
   "source": "https://github.com/wavesoftware/puppet-passless.git",
+  "project_page": "https://github.com/wavesoftware/puppet-passless",
+  "issues_url": "https://github.com/wavesoftware/puppet-passless/issues",
   "dependencies": [
 
   ],
@@ -12,7 +14,8 @@
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "7", "8"
+        "7",
+        "8"
       ]
     },
     {
@@ -24,7 +27,8 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "7", "8"
+        "7",
+        "8"
       ]
     },
     {
@@ -36,7 +40,8 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "8", "9"
+        "8",
+        "9"
       ]
     },
     {
@@ -55,7 +60,8 @@
     {
       "operatingsystem": "Fedora",
       "operatingsystemrelease": [
-        "29", "30"
+        "29",
+        "30"
       ]
     },
     {
