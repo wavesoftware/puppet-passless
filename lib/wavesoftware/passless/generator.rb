@@ -1,4 +1,4 @@
-require 'openssl'
+require_relative 'crypt/pbkdf2'
 require 'zlib'
 
 module WaveSoftware::PassLess
@@ -25,14 +25,14 @@ module WaveSoftware::PassLess
     private
 
     def calculate_master_key(identity, secret)
-      key    = secret
-      seed   = Type::AUTHENTICATION + identity.length.to_s + identity
-      n      = 32_768
-      r      = 8
-      p      = 2
-      dk_len = 64
+      key             = secret
+      salt            = Type::AUTHENTICATION + identity.length.to_s + identity
+      cost            = 32_768
+      blocksize       = 8
+      parallelization = 2
+      length          = 64
 
-      scrypt(key, seed, n, r, p, dk_len)
+      crypt(key, salt, cost, blocksize, parallelization, length)
     end
 
     def calculate_site_key(site_name, master_key, counter)
@@ -50,6 +50,7 @@ module WaveSoftware::PassLess
         number = numbers.next
         password << scope.provide(number)
       end
+      raise 'Generated password has invalid size' if password.length != length
       password
     end
 
@@ -73,11 +74,12 @@ module WaveSoftware::PassLess
       end
     end
 
-    def scrypt(key, seed, n, r, p, dk_len)
-      # TODO: Call real scrypt if available
-      digest = OpenSSL::Digest.new('sha256')
-      data = seed + n.to_s + r.to_s + p.to_s + dk_len.to_s
-      OpenSSL::HMAC.digest(digest, key, data)
+    def crypt(key, salt, cost, blocksize, parallelization, length)
+      # TODO: Call scrypt if available
+      algorithm = WaveSoftware::PassLess::Crypt::Pbkdf2.new(
+        salt, cost, blocksize, parallelization, length
+      )
+      algorithm.crypt(key)
     end
   end
 end
