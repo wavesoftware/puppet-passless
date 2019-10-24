@@ -1,6 +1,6 @@
 {
   "name": "wavesoftware-passless",
-  "version": "0.1.0-pre",
+  "version": "0.1.0",
   "author": "Chris Suszynski",
   "summary": "A Puppet master password implementation that uses Puppet server's CA key to automate password creation.",
   "license": "Apache-2.0",
