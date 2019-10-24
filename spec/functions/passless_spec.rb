@@ -31,26 +31,26 @@ describe :passless do
       it do
         is_expected.to run
           .with_params('passfile-label')
-          .and_return('Jfu0U8UlPpOPo82j')
+          .and_return('zWABIfQVdYcVZM5y')
       end
 
       it do
         is_expected.to run
           .with_params('passfile-label', 'counter' => 1)
-          .and_return('Jfu0U8UlPpOPo82j')
+          .and_return('zWABIfQVdYcVZM5y')
       end
 
       it do
         is_expected.to run
           .with_params('passfile-label', 'counter' => 2, 'scope' => 'alnum')
-          .and_return('MSwrGuJXya23iYKp')
+          .and_return('6COKhRHmt3QuwqTj')
       end
 
       it do
         is_expected.to run
           .with_params('passfile-label',
                        'counter' => 1, 'scope' => 'human', 'length' => 6)
-          .and_return('UMuXms')
+          .and_return('Hmbeua')
       end
 
       it do
@@ -67,15 +67,15 @@ describe :passless do
       it do
         is_expected.to run
           .with_params('passfile-label',
-                       'counter' => 42, 'scope' => 'utf8', 'length' => 8)
-          .and_return('ʀvڄԧ˚ʞЅƘ')
+                       'counter' => 5, 'scope' => 'utf8', 'length' => 8)
+          .and_return('⥸P×࿘ؠ➜⣧त')
       end
 
       it do
         is_expected.to run
           .with_params('passfile-label',
                        'counter' => 42, 'scope' => 'keys', 'length' => 8)
-          .and_return('v6)-A0r}')
+          .and_return('F66:8?V]')
       end
 
       it do
@@ -84,14 +84,14 @@ describe :passless do
             'passfile-label',
             'counter' => 42, 'scope' => 'list:abcd1234', 'length' => 8
           )
-          .and_return('a1ad3d1b')
+          .and_return('a4cb4332')
       end
 
       it do
         is_expected.to run
           .with_params('passfile-label',
                        'counter' => 42, 'scope' => 'num', 'length' => 4)
-          .and_return('0685')
+          .and_return('4747')
       end
     end
 
@@ -101,14 +101,14 @@ describe :passless do
       it do
         is_expected.to run
           .with_params('passfile-label')
-          .and_return('dPol3jBpQS029hax')
+          .and_return('Njj5q6icBNNT7QaS')
       end
 
       it do
         is_expected.to run
           .with_params('passfile-label',
                        'counter' => 42, 'scope' => 'alpha', 'length' => 32)
-          .and_return('lUxJWUolenIiSWFkPKedPojeyZsFZVtE')
+          .and_return('WPHVGHcgglSKmdLnchkSrekcMKVrpqyq')
       end
     end
   end

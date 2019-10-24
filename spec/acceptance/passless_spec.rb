@@ -1,7 +1,8 @@
 require 'spec_helper_acceptance'
 
 describe :passless do
-  let(:pp) { File.read('examples/passfile.pp') }
+  let(:pp1) { File.read('examples/passfile.pp') }
+  let(:pp2) { File.read('examples/passfile-with-opts.pp') }
   let(:cafixtures) { Pathname.new('spec/fixtures/ca').realpath }
 
   before do
@@ -13,11 +14,22 @@ describe :passless do
                      '/etc/puppetlabs/puppet/ssl/ca/ca_crt.pem')
   end
 
-  it 'creates a file that contains a password' do
-    idempotent_apply(pp)
+  describe 'executed without any options' do
+    it 'results in IOaNTcYttNJRK9Gw password' do
+      idempotent_apply(pp1)
 
-    expect(file('/etc/passfile')).to contain(
-      'Password is kgxAl7U4nDE63t91'
-    )
+      expect(file('/etc/passfile').content).to eq(
+        'Password is IOaNTcYttNJRK9Gw'
+      )
+    end
+  end
+  describe 'executed with options' do
+    it 'results in ysc!%9DY:RVfxchyZNa5KgrkG@L9TB=: password' do
+      idempotent_apply(pp2)
+
+      expect(file('/etc/passfile').content).to eq(
+        'Password is ysc!%9DY:RVfxchyZNa5KgrkG@L9TB=:'
+      )
+    end
   end
 end

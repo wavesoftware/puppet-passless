@@ -17,7 +17,7 @@ module WaveSoftware::PassLess::Scope
       return enum_for(__callee__, mb).lazy unless block_given?
 
       # determine the maximum codepoint based on the number of UTF-8 bytes
-      max = [0x80, 0x800, 0x10000, 0x110000][mb.pred]
+      max = [0x80, 0x800, 0x2BEF, 0x10000, 0x110000][mb.pred]
 
       loop do
         begin
